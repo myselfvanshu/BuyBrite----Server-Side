@@ -1,0 +1,48 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "test:unit": "lerna run test:unit",
+    "test:integration": "lerna run test:integration",
+    "lint": "lerna run lint",
+    "changesets:version": "yarn changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn prepare:docs",
+    "changesets:publish": "yarn build && yarn changeset publish",
+    "prepare:docs": "cd docs && yarn install && yarn api-extract && yarn add-changelogs",
+    "postinstall": "cd packages/changesets && yarn build && cd ../../packages/nuxt && yarn run prepare"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@changesets/cli": "^2.26.1",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16",
+    "@vue-storefront/api-extractor-config": "*",
+    "@vue-storefront/eslint-config-integrations": "*",
+    "@vue-storefront/integrations-tsconfig": "*",
+    "@vue-storefront/jest-config": "*",
+    "@vue-storefront/rollup-config": "^0.0.6",
+    "cross-env": "^6.0.3",
+    "husky": "^8.0.3",
+    "jest": "^27.0.6",
+    "lerna": "^6.6.2",
+    "lint-staged": "^13.2.2",
+    "rimraf": "^5.0.0",
+    "rollup": "^2.59.0",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^8.4.1",
+    "tslib": "^2.1.0",
+    "typescript": "^5",
+    "webpack-bundle-analyzer": "^3.5.2"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/!(storefront)",
+      "engineering-toolkit/*"
+    ]
+  },
+  "engines": {
+    "node": ">=12.x"
+  }
+}
